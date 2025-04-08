@@ -55,7 +55,7 @@ window.chatApp.inactivityTracker = {
     const inactiveTime = Date.now() - this.lastActivityTime;
     
     if (inactiveTime >= this.inactivityTimeout) {
-      console.log("User inactive, redirecting to home page...");
+      console.log("User inactive, redirecting to Chatbot Front Page...");
       this.showRedirectNotice();
     }
   },
@@ -69,7 +69,7 @@ window.chatApp.inactivityTracker = {
                   background: rgba(0, 0, 0, 0.7); z-index: 1000; display: flex; 
                   flex-direction: column; justify-content: center; align-items: center; color: white;">
         <h2>No activity detected</h2>
-        <p>Redirecting to home page in <span id="countdown">5</span> seconds...</p>
+        <p>Redirecting to Chatbot Front Page in <span id="countdown">5</span> seconds...</p>
         <button id="stay-button" style="padding: 10px 20px; margin-top: 20px; 
                                        background: #1e628c; border: none; color: white; 
                                        border-radius: 5px; cursor: pointer;">
