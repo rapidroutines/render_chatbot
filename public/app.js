@@ -23,7 +23,7 @@ async function generateAPIResponse(incomingMessageDiv) {
     };
 
     // Send request to Python backend
-    const response = await fetch("https://render-chatbot-2.onrender.com/generate", {
+    const response = await fetch("https://render-chatbot-di08.onrender.com/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
