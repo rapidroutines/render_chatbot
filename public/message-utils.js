@@ -75,8 +75,17 @@ function createMessageElement(content, ...classes) {
   function getRandomWelcomeMessage() {
     const welcomeMessages = [
       "Hi! Welcome to RapidRoutines AI. How can I help you today?",
-      "Yo yo! RapidRoutines AI. How can I help?",
+      "Yo! RapidRoutines AI. How can I help?",
       "Yo what's up! This is RapidRoutines AI. Need some help creating a workout routine?",
+      "Hey RapidRoutines AI here! How can I help you today?",
+      "Hi there! Got any fitness questions?",
+      "Welcome to RapidRoutines AI! What can I do for you today?",
+      "Yo! RapidRoutines AI. Need a hand with something?",
+      "Hey! What’s on your mind?",
+      "Hi! Looking for some fitness advice?",
+      "What’s up? I’m here if you need anything.",
+      "Hi! Let me know how I can help.",
+
     ];
     
     return welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
