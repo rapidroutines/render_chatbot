@@ -468,3 +468,51 @@ body {
 .autocomplete-items {
   font-family: var(--secondary-font);
 }
+
+/* Inactivity notice styling */
+.redirect-notice {
+  font-family: var(--secondary-font);
+}
+
+.redirect-notice h2 {
+  font-family: var(--primary-font);
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.redirect-notice p {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.redirect-notice #countdown {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.redirect-notice button {
+  transition: all 0.2s ease;
+  font-family: var(--secondary-font);
+}
+
+.redirect-notice button:hover {
+  background-color: #175275 !important;
+  transform: translateY(-2px);
+}
+
+.redirect-notice button:active {
+  transform: translateY(1px);
+}
+
+/* Mobile responsiveness for inactivity notice */
+@media (max-width: 480px) {
+  .redirect-notice h2 {
+    font-size: 20px;
+  }
+  
+  .redirect-notice p {
+    font-size: 16px;
+    text-align: center;
+    padding: 0 20px;
+  }
+}
