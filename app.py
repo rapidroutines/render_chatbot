@@ -11,7 +11,7 @@ load_dotenv()
 
 
 app = Flask(__name__, static_folder='public', static_url_path='')
-CORS(app, resources={r"/*": {"origins": "https://render-chatbot-2.onrender.com"}},
+CORS(app, resources={r"/*": {"origins": "https://render-chatbot-di08.onrender.com"}},
      methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
      allow_headers=["Content-Type", "Authorization"])
 
