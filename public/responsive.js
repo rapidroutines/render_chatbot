@@ -1,126 +1,159 @@
-// Add these elements to the chatApp global object
+// Create or use the existing chatApp global object
+window.chatApp = window.chatApp || {};
+
+// DOM Elements
 window.chatApp.saveButton = document.querySelector("#save-button");
 window.chatApp.sendButton = document.querySelector("#button");
+window.chatApp.deleteButton = document.querySelector("#delete-chat-button");
+window.chatApp.typingForm = document.querySelector(".typing-form");
+window.chatApp.chatContainer = document.querySelector(".chat-list");
+window.chatApp.container = document.querySelector(".container");
+window.chatApp.buttonGroup = document.querySelector(".button-group");
 
-// Function to handle responsive layout
+// Handle responsive layout based on screen size
 function handleResponsiveLayout() {
-  // Get current window width
+  // Get current window dimensions
   const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
   
-  // Check if it's a mobile device (iPhone or similar phone resolution)
-  // Common phone widths are typically 480px or less for very small phones,
-  // and around 767px or less for larger phones
-  const isMobileDevice = windowWidth <= 767;
+  // Define breakpoints to match CSS
+  const isMobile = windowWidth <= 575;
+  const isSmallTablet = windowWidth > 575 && windowWidth <= 767;
+  const isTablet = windowWidth > 767 && windowWidth <= 991;
+  const isSmallDesktop = windowWidth > 991 && windowWidth <= 1199;
+  const isLargeDesktop = windowWidth > 1199;
   
-  // Get the button container
-  const buttonContainer = document.querySelector(".button-container");
-  
-  if (isMobileDevice) {
-    // REMOVE save button completely on mobile (not just hide)
-    if (window.chatApp.saveButton && window.chatApp.saveButton.parentNode) {
-      window.chatApp.saveButton.parentNode.removeChild(window.chatApp.saveButton);
+  // Handle container sizing for best user experience
+  if (window.chatApp.container) {
+    // Set max-width based on screen size - allowing it to scale up on larger screens
+    if (isMobile) {
+      // On mobile, use full width of device
+      window.chatApp.container.style.maxWidth = "100%";
+      window.chatApp.container.style.borderRadius = "0";
+      window.chatApp.container.style.height = "90vh";
+    } else if (isSmallTablet) {
+      window.chatApp.container.style.maxWidth = "500px";
+      window.chatApp.container.style.borderRadius = "12px";
+      window.chatApp.container.style.height = "80vh";
+    } else if (isTablet) {
+      window.chatApp.container.style.maxWidth = "700px";
+      window.chatApp.container.style.borderRadius = "12px";
+      window.chatApp.container.style.height = "80vh";
+    } else if (isSmallDesktop) {
+      window.chatApp.container.style.maxWidth = "800px";
+      window.chatApp.container.style.borderRadius = "12px";
+      window.chatApp.container.style.height = "85vh";
+    } else if (isLargeDesktop) {
+      window.chatApp.container.style.maxWidth = "1000px";
+      window.chatApp.container.style.borderRadius = "12px";
+      window.chatApp.container.style.height = "85vh";
     }
     
-    // Adjust layout for send and delete buttons
-    if (buttonContainer) {
-      buttonContainer.style.justifyContent = "flex-end";
-      buttonContainer.style.gap = "4px"; // Reduce gap between buttons
-    }
-    
-    // Make input field take more space
-    const typingInput = document.querySelector(".typing-input");
-    if (typingInput) {
-      typingInput.style.flexGrow = "1";
-      typingInput.style.width = "calc(100% - 90px)"; // Adjust width for better space utilization
-    }
-  } else {
-    // Check if save button exists - if not, recreate it
-    if (!document.querySelector("#save-button") && buttonContainer) {
-      // Recreate the save button if we're back on desktop
-      const saveButton = document.createElement("button");
-      saveButton.id = "save-button";
-      saveButton.className = "button";
-      saveButton.innerHTML = '<i class="fas fa-save"></i> Save Chat';
-      saveButton.addEventListener("click", saveChatContent);
-      
-      // Insert before the send button if it exists
-      if (window.chatApp.sendButton && window.chatApp.sendButton.parentNode) {
-        window.chatApp.sendButton.parentNode.insertBefore(saveButton, window.chatApp.sendButton);
-      } else {
-        // Otherwise just append to the button container
-        buttonContainer.appendChild(saveButton);
-      }
-      
-      // Update the reference
-      window.chatApp.saveButton = saveButton;
-    }
-    
-    // Reset button container layout
-    if (buttonContainer) {
-      buttonContainer.style.justifyContent = "";
-      buttonContainer.style.gap = "8px"; // Restore default gap
-    }
-    
-    // Reset input field
-    const typingInput = document.querySelector(".typing-input");
-    if (typingInput) {
-      typingInput.style.flexGrow = "1";
-      typingInput.style.width = "";
+    // Adjust for landscape orientation on small height screens
+    if (windowHeight <= 500 && windowWidth > windowHeight) {
+      window.chatApp.container.style.height = "90vh";
     }
   }
   
-  // Ensure container fits well on all screens
-  const container = document.querySelector(".container");
-  if (container) {
-    // Set max width based on screen size
-    if (windowWidth <= 340) {
-      container.style.maxWidth = "280px";
-    } else if (windowWidth <= 480) {
-      container.style.maxWidth = "320px";
-    } else if (windowWidth <= 767) {
-      container.style.maxWidth = "350px";
-    } else {
-      container.style.maxWidth = "370px"; // Default from CSS
-    }
+  // Make sure title bar has matching border radius
+  const titleElement = document.querySelector(".title");
+  if (titleElement) {
+    titleElement.style.borderRadius = isMobile ? "0" : "12px 12px 0 0";
+  }
+  
+  // Make sure typing form has matching border radius
+  if (window.chatApp.typingForm) {
+    window.chatApp.typingForm.style.borderRadius = isMobile ? "0" : "0 0 12px 12px";
     
-    // Adjust height for very small screens
-    if (windowWidth <= 480 && window.innerHeight <= 600) {
-      container.style.height = "85vh";
+    // Adjust padding for different screen sizes
+    if (isMobile) {
+      window.chatApp.typingForm.style.padding = windowWidth <= 360 ? "8px 8px" : "8px 10px";
+    } else if (isSmallTablet) {
+      window.chatApp.typingForm.style.padding = "10px 12px";
     } else {
-      container.style.height = "80vh"; // Default from CSS
+      window.chatApp.typingForm.style.padding = "12px 15px";
     }
   }
+  
+  // Adjust button sizes based on screen width
+  if (window.chatApp.buttonGroup) {
+    // Set button sizes based on screen size
+    const buttonSize = windowWidth <= 360 ? "34px" : 
+                       windowWidth <= 480 ? "36px" : 
+                       windowWidth <= 767 ? "38px" : "40px";
+    
+    // Set gap between buttons
+    window.chatApp.buttonGroup.style.gap = windowWidth <= 400 ? "6px" : "10px";
+    
+    // Apply sizes to all buttons
+    const buttons = window.chatApp.buttonGroup.querySelectorAll(".button");
+    buttons.forEach(button => {
+      button.style.width = buttonSize;
+      button.style.height = buttonSize;
+    });
+  }
+  
+  // Adjust text bubble max-width for readability on different screen sizes
+  const textElements = document.querySelectorAll(".text");
+  textElements.forEach(element => {
+    if (isLargeDesktop) {
+      element.style.maxWidth = "70%";
+    } else if (isSmallDesktop || isTablet) {
+      element.style.maxWidth = "70%";
+    } else if (isSmallTablet) {
+      element.style.maxWidth = "75%";
+    } else if (isMobile) {
+      element.style.maxWidth = "80%";
+    }
+  });
 }
 
 // Function to save chat content to localStorage
 function saveChatContent() {
   if (window.chatApp.chatContainer) {
     localStorage.setItem("saved-chats", window.chatApp.chatContainer.innerHTML);
-    localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context));
+    localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context || []));
     alert("Chat saved successfully!");
   }
 }
 
-// Add the responsive layout handler to the initialize function
-function enhancedInitializeApp() {
-  // Original initialization
-  initializeApp();
-  
-  // Add save button functionality if it exists
+// Initialize the responsive layout
+function initializeResponsiveLayout() {
+  // Set up event listeners
   if (window.chatApp.saveButton) {
     window.chatApp.saveButton.addEventListener("click", saveChatContent);
   }
   
-  // Initial check for responsive layout
+  // Run initial layout adjustment
   handleResponsiveLayout();
   
-  // Add event listener for window resize
+  // Set up event listeners for screen changes
   window.addEventListener("resize", handleResponsiveLayout);
+  window.addEventListener("orientationchange", () => {
+    // Small delay to ensure orientation change is complete
+    setTimeout(handleResponsiveLayout, 100);
+  });
   
-  // Handle orientation change for mobile devices
-  window.addEventListener("orientationchange", handleResponsiveLayout);
+  // Handle keyboard appearance on mobile
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    const typingInput = document.querySelector('.typing-input');
+    if (typingInput) {
+      typingInput.addEventListener('focus', () => {
+        // Delay scrolling to ensure keyboard is fully open
+        setTimeout(() => {
+          if (window.chatApp.chatContainer) {
+            window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
+          }
+        }, 300);
+      });
+    }
+  }
 }
 
-// Replace the original DOMContentLoaded listener with our enhanced version
-document.removeEventListener('DOMContentLoaded', initializeApp);
-document.addEventListener('DOMContentLoaded', enhancedInitializeApp);
+// Initialize immediately if DOM is already loaded
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  initializeResponsiveLayout();
+} else {
+  // Otherwise wait for DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', initializeResponsiveLayout);
+}
