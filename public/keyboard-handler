@@ -1,0 +1,79 @@
+// Mobile Keyboard Handler
+window.chatApp = window.chatApp || {};
+
+window.chatApp.keyboardHandler = {
+  initialize: function() {
+    // Check if we're on a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (!isMobile) return; // Only run on mobile devices
+    
+    const typingInput = document.querySelector('.typing-input');
+    
+    if (typingInput) {
+      // When keyboard opens
+      typingInput.addEventListener('focus', () => {
+        document.body.classList.add('keyboard-open');
+        
+        // Scroll to bottom when keyboard opens
+        setTimeout(() => {
+          if (window.chatApp.chatContainer) {
+            window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
+          }
+        }, 300);
+      });
+      
+      // When keyboard closes
+      typingInput.addEventListener('blur', () => {
+        document.body.classList.remove('keyboard-open');
+      });
+    }
+    
+    // Fix for iOS viewport height issues during keyboard open
+    let viewportHeight = window.innerHeight;
+    
+    window.addEventListener('resize', () => {
+      // If height is significantly reduced, keyboard is likely open
+      if (window.innerHeight < viewportHeight * 0.8) {
+        document.body.classList.add('keyboard-open');
+      } else {
+        document.body.classList.remove('keyboard-open');
+      }
+      
+      // Update viewport height reference on orientation change
+      if (Math.abs(window.innerHeight - viewportHeight) > 200) {
+        viewportHeight = window.innerHeight;
+      }
+    });
+    
+    // Add double-tap detection for mobile devices to improve UX
+    let lastTapTime = 0;
+    document.addEventListener('touchend', (e) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTapTime;
+      
+      if (tapLength < 300 && tapLength > 0) {
+        // Double tap detected - do nothing to prevent iOS zoom
+        e.preventDefault();
+      }
+      
+      lastTapTime = currentTime;
+    });
+    
+    // Prevent pull-to-refresh on mobile
+    document.body.addEventListener('touchmove', (e) => {
+      if (window.pageYOffset === 0 && e.touches[0].pageY > 0) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+};
+
+// Initialize keyboard handler when DOM is loaded
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  window.chatApp.keyboardHandler.initialize();
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.chatApp.keyboardHandler.initialize();
+  });
+}
