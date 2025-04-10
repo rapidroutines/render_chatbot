@@ -356,17 +356,6 @@ body {
   font-style: italic;
 }
 
-.button {
-  font-family: var(--secondary-font);
-  font-weight: 400;
-  margin-left: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.autocomplete-items {
-  font-family: var(--secondary-font);
-}
-
 /* Button group container for horizontal alignment */
 .button-group {
   display: flex;
@@ -376,7 +365,7 @@ body {
   flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
-/* Common button styling - All buttons same size as trash icon */
+/* UPDATED: Common button styling with fixed sizes */
 .button {
   border: none;
   cursor: pointer;
@@ -385,51 +374,58 @@ body {
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
-  width: 40px; /* Uniform width for all buttons */
-  height: 40px; /* Uniform height for all buttons */
+  width: 40px; /* Fixed width */
+  height: 40px; /* Fixed height */
   border-radius: 50%; /* Circular buttons */
+  font-family: var(--secondary-font);
+  font-weight: 400;
 }
 
+/* Regular button styling */
 #button {
-  background-color: #1E628C; 
-   color: white;
- 
+  background-color: white; 
+  color: #1E628C;
+  width: 40px; /* Explicitly set width */
+  height: 40px; /* Explicitly set height */
 }
 
 #button i {
-  font-size: 20px; /* Consistent icon size */
+  font-size: 40px; /* Consistent icon size */
 }
 
-#button:hover {
-  background-color: #175275;
-  transform: translateY(-2px);
-}
 
 #button:active {
   transform: translateY(1px);
 }
 
+/* UPDATED: Save button styled like Telegram icon */
 #save-button {
-  background-color: #1E628C;
+  background-color: #1E628C; /* Telegram-like blue */
   color: white;
+  width: 50px; /* Larger width */
+  height: 50px; /* Larger height */
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  overflow: hidden;
 }
 
 #save-button i {
-  font-size: 20px; /* Consistent icon size */
+  font-size: 24px; /* Larger icon size */
 }
 
-#save-button:hover {
-  background-color: #175275;
-  transform: translateY(-2px);
-}
+
 
 #save-button:active {
   transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
+/* Delete button styling */
 #delete-chat-button {
   background-color: #dc3545;
   color: white;
+  width: 40px; /* Explicitly set width */
+  height: 40px; /* Explicitly set height */
 }
 
 #delete-chat-button i {
@@ -478,17 +474,34 @@ body {
   .typing-input {
     margin-right: 8px;
   }
+  
+  /* Maintain save button size even on smaller screens */
+  #save-button {
+    width: 50px; /* Keep larger size */
+    height: 50px; /* Keep larger size */
+  }
 }
 
 /* Extra small screens */
 @media screen and (max-width: 360px) {
-  .button {
-    width: 36px; /* Even smaller on very small screens */
+  /* Keep other buttons smaller */
+  #button, #delete-chat-button {
+    width: 36px;
     height: 36px;
   }
   
-  .button i {
-    font-size: 18px; /* Smaller icons on very small screens */
+  #button i, #delete-chat-button i {
+    font-size: 18px;
+  }
+  
+  /* Still maintain save button larger size */
+  #save-button {
+    width: 46px; /* Slightly reduced but still bigger */
+    height: 46px;
+  }
+  
+  #save-button i {
+    font-size: 22px;
   }
   
   .button-group {
@@ -496,7 +509,7 @@ body {
   }
 }
 
-/* Make sure all three buttons are visible on all screen sizes */
+/* Make sure all buttons are visible on all screen sizes */
 @media screen and (max-width: 575px) {
   #save-button {
     display: flex !important; /* Override any previous hiding */
@@ -522,12 +535,27 @@ body {
     height: 36px;
   }
   
-  .button {
+  /* Maintain minimum sizes for buttons */
+  #button, #delete-chat-button {
     width: 34px;
     height: 34px;
+    min-width: 34px; /* Ensure minimum width */
+    min-height: 34px; /* Ensure minimum height */
   }
   
-  .button i {
+  #button i, #delete-chat-button i {
     font-size: 16px;
+  }
+  
+  /* Keep save button larger */
+  #save-button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px; /* Ensure minimum width */
+    min-height: 44px; /* Ensure minimum height */
+  }
+  
+  #save-button i {
+    font-size: 20px;
   }
 }
