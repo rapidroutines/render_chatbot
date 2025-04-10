@@ -26,11 +26,6 @@ class Document:
         self.embedding = np.array(embedding)
 
 def load_knowledge_base(file_path):
-    """
-    Loads the knowledge base from a JSON file.
-    Each document in the file should include "id", "content", and optionally an "embedding".
-    If an embedding is missing, it will be computed using the SentenceTransformer model.
-    """
     with open(file_path, "r") as f:
         data = json.load(f)
     docs = []
@@ -47,15 +42,9 @@ knowledge_base_file = "knowledge_base.json"
 document_embeddings = load_knowledge_base(knowledge_base_file)
 
 def calculate_cosine_similarity(vecA, vecB):
-    """Calculates cosine similarity between two vectors."""
     return np.dot(vecA, vecB) / (np.linalg.norm(vecA) * np.linalg.norm(vecB))
 
 def retrieve_relevant_documents(query):
-    """
-    Computes the embedding for the query,
-    then calculates cosine similarity with each document's embedding.
-    Returns the content of the top three most similar documents.
-    """
     query_embedding = model.encode(query)
     scored_docs = [
         (doc, calculate_cosine_similarity(query_embedding, doc.embedding))
