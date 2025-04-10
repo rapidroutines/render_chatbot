@@ -1,4 +1,3 @@
-// Create a new message element and return it
 function createMessageElement(content, ...classes) {
     const div = document.createElement("div");
     div.classList.add("message", ...classes);
@@ -6,18 +5,14 @@ function createMessageElement(content, ...classes) {
     return div;
   }
   
-  // Format text with bold markers (**text**) into HTML with <strong> tags
   function parseFormattingElements(text) {
-    // Create an array of segments with formatting information
     const segments = [];
     let currentIndex = 0;
   
-    // Parse bold text marked with asterisks
     const boldRegex = /\*\*(.*?)\*\*/g;
     let match;
   
     while ((match = boldRegex.exec(text)) !== null) {
-      // Add text before the match
       if (match.index > currentIndex) {
         segments.push({
           text: text.substring(currentIndex, match.index),
@@ -25,7 +20,6 @@ function createMessageElement(content, ...classes) {
         });
       }
   
-      // Add the bold text (without the ** markers)
       segments.push({
         text: match[1],
         bold: true
@@ -34,7 +28,6 @@ function createMessageElement(content, ...classes) {
       currentIndex = match.index + match[0].length;
     }
   
-    // Add any remaining text
     if (currentIndex < text.length) {
       segments.push({
         text: text.substring(currentIndex),
@@ -42,7 +35,6 @@ function createMessageElement(content, ...classes) {
       });
     }
   
-    // Handle line breaks
     const processedSegments = [];
     
     segments.forEach(segment => {
@@ -71,7 +63,6 @@ function createMessageElement(content, ...classes) {
     return processedSegments;
   }
   
-  // Get a random welcome message
   function getRandomWelcomeMessage() {
     const welcomeMessages = [
       "Hi! Welcome to RapidRoutines AI. How can I help you today?",
@@ -91,7 +82,6 @@ function createMessageElement(content, ...classes) {
     return welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
   }
   
-  // Make functions available to other files
   window.messageUtils = {
     createMessageElement,
     parseFormattingElements,
