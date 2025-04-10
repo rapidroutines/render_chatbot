@@ -5,7 +5,7 @@ window.chatApp = window.chatApp || {};
 window.chatApp.inactivityTracker = {
 
   inactivityTimeout: 180000, // 3 minutes 
-  redirectUrl: "https://render-chatbot.vercel.app/",
+  redirectUrl: "https://render-chatbot-di08.onrender.com",
   inactivityTimer: null,
   lastActivityTime: Date.now(),
   
