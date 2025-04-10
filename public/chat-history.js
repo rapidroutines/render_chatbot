@@ -1,7 +1,5 @@
-// DOM Elements
 const saveButton = document.querySelector('#save-button');
 
-// Function to save chat history
 function saveChatHistory() {
   const chatMessages = document.querySelectorAll('.message');
 
@@ -105,7 +103,6 @@ function saveChatHistory() {
       <div class="chat">
   `;
 
-  // Loop through chat messages and append to HTML content
   chatMessages.forEach(message => {
     const messageContent = message.innerHTML;
     const classes = message.classList.contains('outgoing') ? 'user' : 'bot';
@@ -125,11 +122,9 @@ function saveChatHistory() {
   </html>
   `;
 
-  // Create a Blob from the HTML content
   const blob = new Blob([htmlContent], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
 
-  // Create a link element and trigger a download
   const a = document.createElement('a');
   a.href = url;
   a.download = 'chat_history.html';
@@ -139,7 +134,6 @@ function saveChatHistory() {
   URL.revokeObjectURL(url);
 }
 
-// Event listener for the Save button
 if (saveButton) {
   saveButton.addEventListener('click', (e) => {
     e.preventDefault();
