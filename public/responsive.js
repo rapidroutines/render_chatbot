@@ -40,7 +40,7 @@ function handleResponsiveLayout() {
       const saveButton = document.createElement("button");
       saveButton.id = "save-button";
       saveButton.className = "button";
-      saveButton.innerHTML = '<i class="fas fa-save"></i> Save Chat';
+      saveButton.innerHTML = '<i class="fas fa-save"></i>';
       saveButton.addEventListener("click", saveChatContent);
       
       // Insert before the send button if it exists
