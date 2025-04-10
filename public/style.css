@@ -159,100 +159,6 @@ body {
   box-shadow: 0 0 5px rgba(30, 98, 140, 0.2);
 }
 
-/* Button container for even spacing */
-.button-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  border: none; /* Remove any border */
-}
-
-/* Common button base styling */
-.button {
-  border: none;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease;
-  height: 40px;
-}
-
-/* Send button (circular) styling - Now blue with white icon */
-#button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #1E628C; /* Changed to blue */
-  color: white; /* Changed to white */
-  font-size: 20px; /* Adjusted size to match others */
-}
-
-#button:hover {
-  background-color: #175275; /* Darker blue on hover */
-}
-
-#button:active {
-  transform: translateY(1px);
-}
-
-/* Save button styling */
-#save-button {
-  width: 40px; /* Changed to match others */
-  height: 40px;
-  border-radius: 50%; /* Changed to circular */
-  background-color: white;
-  color: #1E628C;
-  border: 1px solid #1E628C;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#save-button i {
-  font-size: 20px;
-}
-
-#save-button:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-#save-button:active {
-  transform: translateY(1px);
-}
-
-/* Delete chat button (circular) styling */
-#delete-chat-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: white;
-  color: #dc3545;
-  border: 1px solid #dc3545;
-  font-size: 20px;
-}
-
-#delete-chat-button:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-#delete-chat-button:active {
-  transform: translateY(1px);
-}
-
-/* Button group container for horizontal alignment */
-.button-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px; /* Space between buttons */
-  flex-shrink: 0; /* Prevent buttons from shrinking */
-}
-
 /* Custom scrollbar styling */
 .chat-list::-webkit-scrollbar {
   width: 4px;
@@ -387,27 +293,6 @@ body {
   min-height: 28px;
 }
 
-/* Very small screens */
-@media screen and (max-width: 340px) {
-  .container {
-    max-width: 280px;
-  }
-
-  .text {
-    font-size: 13px;
-    padding: 8px;
-  }
-
-  #button, #delete-chat-button, #save-button {
-    width: 36px;
-    height: 36px;
-  }
-
-  .typing-input {
-    height: 36px;
-  }
-}
-
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -482,52 +367,106 @@ body {
   font-family: var(--secondary-font);
 }
 
-/* Inactivity notice styling */
-.redirect-notice {
-  font-family: var(--secondary-font);
+/* Button group container for horizontal alignment */
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
-.redirect-notice h2 {
-  font-family: var(--primary-font);
-  margin-bottom: 10px;
-  font-size: 24px;
-}
-
-.redirect-notice p {
-  margin-bottom: 15px;
-  font-size: 18px;
-}
-
-.redirect-notice #countdown {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.redirect-notice button {
+/* Common button styling - All buttons same size as trash icon */
+.button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
-  font-family: var(--secondary-font);
+  width: 40px; /* Uniform width for all buttons */
+  height: 40px; /* Uniform height for all buttons */
+  border-radius: 50%; /* Circular buttons */
 }
 
-.redirect-notice button:hover {
-  background-color: #175275 !important;
+#button {
+  background-color: #1E628C; 
+   color: white;
+ 
+}
+
+#button i {
+  font-size: 20px; /* Consistent icon size */
+}
+
+#button:hover {
+  background-color: #175275;
   transform: translateY(-2px);
 }
 
-.redirect-notice button:active {
+#button:active {
   transform: translateY(1px);
 }
 
-/* Mobile responsiveness for inactivity notice */
-@media (max-width: 480px) {
-  .redirect-notice h2 {
-    font-size: 20px;
-  }
-  
-  .redirect-notice p {
-    font-size: 16px;
-    text-align: center;
-    padding: 0 20px;
-  }
+#save-button {
+  background-color: #1E628C;
+  color: white;
+}
+
+#save-button i {
+  font-size: 20px; /* Consistent icon size */
+}
+
+#save-button:hover {
+  background-color: #175275;
+  transform: translateY(-2px);
+}
+
+#save-button:active {
+  transform: translateY(1px);
+}
+
+#delete-chat-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+#delete-chat-button i {
+  font-size: 20px; /* Consistent icon size */
+}
+
+#delete-chat-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+/* Typing form layout */
+.typing-form {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f4f4f4;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Input field styling */
+.typing-input {
+  flex-grow: 1;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #1E628C;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  background-color: #f4f4f4;
+  color: #333;
+  margin-right: 10px;
 }
 
 /* Mobile optimization */
@@ -565,5 +504,30 @@ body {
   
   .typing-form {
     padding: 8px 10px;
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 340px) {
+  .container {
+    max-width: 280px;
+  }
+
+  .text {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .typing-input {
+    height: 36px;
+  }
+  
+  .button {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .button i {
+    font-size: 16px;
   }
 }
