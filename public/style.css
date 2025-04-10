@@ -183,7 +183,7 @@ body {
 
 /* Send button styling */
 #button {
-  background-color: white;
+  background-color: transparent;
   color: #1E628C;
   font-size: 41px;
 }
