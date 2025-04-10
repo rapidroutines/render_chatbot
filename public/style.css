@@ -151,7 +151,7 @@ body {
   font-size: 14px;
   background-color: #f4f4f4;
   color: #333;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .typing-input:focus {
@@ -392,8 +392,8 @@ body {
 
 /* Specific button styles with consistent sizing */
 #button {
-  background-color: #1E628C; /* Match save button color */
-  color: white;
+  background-color: #1E628C; /* Blue background */
+  color: white; /* White icon */
 }
 
 #button i {
@@ -410,8 +410,9 @@ body {
 }
 
 #save-button {
-  background-color: #1E628C;
-  color: white;
+  background-color: white; /* White background */
+  color: #1E628C; /* Blue icon */
+  border: 1px solid #1E628C; /* Add a border */
 }
 
 #save-button i {
@@ -419,7 +420,7 @@ body {
 }
 
 #save-button:hover {
-  background-color: #175275;
+  background-color: #f0f0f0;
   transform: translateY(-2px);
 }
 
@@ -428,8 +429,9 @@ body {
 }
 
 #delete-chat-button {
-  background-color: #dc3545;
-  color: white;
+  background-color: white; /* White background */
+  color: #dc3545; /* Red icon */
+  border: 1px solid #dc3545; /* Add a border */
 }
 
 #delete-chat-button i {
@@ -437,7 +439,7 @@ body {
 }
 
 #delete-chat-button:hover {
-  background-color: #c82333;
+  background-color: #f0f0f0;
   transform: translateY(-2px);
 }
 
