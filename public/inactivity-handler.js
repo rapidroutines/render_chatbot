@@ -9,11 +9,9 @@ window.chatApp.inactivityTracker = {
   inactivityTimer: null,
   lastActivityTime: Date.now(),
   
-  // Initialize the inactivity tracker
   initialize: function() {
     console.log("Initializing inactivity tracker...");
     
-    // Bind activity reset events
     const resetActivity = this.resetInactivityTimer.bind(this);
     document.addEventListener('mousemove', resetActivity);
     document.addEventListener('keydown', resetActivity);
@@ -21,23 +19,19 @@ window.chatApp.inactivityTracker = {
     document.addEventListener('touchstart', resetActivity);
     document.addEventListener('input', resetActivity);
     
-    // Specific event for chat input
     const typingInput = document.querySelector(".typing-input");
     if (typingInput) {
       typingInput.addEventListener('input', resetActivity);
     }
     
-    // Start the inactivity timer
     this.startInactivityTimer();
   },
   
-  // Start the inactivity timer
   startInactivityTimer: function() {
     this.resetInactivityTimer();
     console.log("Inactivity timer started");
   },
   
-  // Reset the inactivity timer
   resetInactivityTimer: function() {
     if (this.inactivityTimer) {
       clearTimeout(this.inactivityTimer);
@@ -50,7 +44,6 @@ window.chatApp.inactivityTracker = {
     }, this.inactivityTimeout);
   },
   
-  // Check if the user is inactive
   checkInactivity: function() {
     const inactiveTime = Date.now() - this.lastActivityTime;
     
@@ -60,7 +53,6 @@ window.chatApp.inactivityTracker = {
     }
   },
   
-  // Show a notice before redirecting
   showRedirectNotice: function() {
     const noticeElement = document.createElement('div');
     noticeElement.className = 'redirect-notice';
@@ -104,7 +96,6 @@ window.chatApp.inactivityTracker = {
   }
 };
 
-// Initialize the inactivity tracker when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', () => {
   window.chatApp.inactivityTracker.initialize();
 });
