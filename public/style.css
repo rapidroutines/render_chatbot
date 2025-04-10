@@ -159,26 +159,6 @@ body {
   box-shadow: 0 0 5px rgba(30, 98, 140, 0.2);
 }
 
-/* Button container for even spacing */
-.button-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  border: none; /* Remove any border */
-}
-
-/* Common button base styling */
-.button {
-  border: none;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease;
-  height: 40px;
-}
-
 /* Custom scrollbar styling */
 .chat-list::-webkit-scrollbar {
   width: 4px;
@@ -313,33 +293,6 @@ body {
   min-height: 28px;
 }
 
-/* Very small screens */
-@media screen and (max-width: 340px) {
-  .container {
-    max-width: 280px;
-  }
-
-  .text {
-    font-size: 13px;
-    padding: 8px;
-  }
-
-  #button, #delete-chat-button {
-    width: 36px;
-    height: 36px;
-  }
-
-  #save-button {
-    height: 36px;
-    padding: 0 12px;
-    font-size: 13px;
-  }
-
-  .typing-input {
-    height: 36px;
-  }
-}
-
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -414,7 +367,6 @@ body {
   font-family: var(--secondary-font);
 }
 
-
 /* Button group container for horizontal alignment */
 .button-group {
   display: flex;
@@ -433,26 +385,19 @@ body {
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
-  border-radius: 20px; /* Rounded corners for all buttons */
-  height: 40px;
-  padding: 0 15px; /* Add horizontal padding */
-  font-size: 16px;
-  font-weight: bold;
+  width: 50px; /* Uniform width for all buttons */
+  height: 50px; /* Uniform height for all buttons */
+  border-radius: 50%; /* Circular buttons */
 }
 
 /* Specific button styles with consistent sizing */
 #button {
   background-color: #1E628C; /* Match save button color */
   color: white;
-  width: auto; /* Auto width instead of fixed */
-  min-width: 80px; /* Minimum width */
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 #button i {
-  font-size: 16px;
+  font-size: 24px; /* Larger icon size */
 }
 
 #button:hover {
@@ -467,15 +412,10 @@ body {
 #save-button {
   background-color: #1E628C;
   color: white;
-  width: auto;
-  min-width: 80px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 #save-button i {
-  font-size: 16px;
+  font-size: 22px; /* Slightly larger icon */
 }
 
 #save-button:hover {
@@ -490,8 +430,10 @@ body {
 #delete-chat-button {
   background-color: #dc3545;
   color: white;
-  width: auto;
-  min-width: 40px;
+}
+
+#delete-chat-button i {
+  font-size: 22px; /* Consistent icon size */
 }
 
 #delete-chat-button:hover {
@@ -534,9 +476,12 @@ body {
   }
   
   .button {
-    padding: 0 12px;
-    font-size: 14px;
-    min-width: 60px;
+    width: 45px; /* Slightly smaller on mobile */
+    height: 45px;
+  }
+  
+  .button i {
+    font-size: 20px; /* Slightly smaller icons on mobile */
   }
   
   .typing-input {
@@ -547,9 +492,12 @@ body {
 /* Extra small screens */
 @media screen and (max-width: 360px) {
   .button {
-    padding: 0 10px;
-    min-width: 40px;
-    font-size: 13px;
+    width: 40px; /* Even smaller on very small screens */
+    height: 40px;
+  }
+  
+  .button i {
+    font-size: 18px; /* Smaller icons on very small screens */
   }
   
   .button-group {
@@ -565,5 +513,30 @@ body {
   
   .typing-form {
     padding: 8px 10px;
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 340px) {
+  .container {
+    max-width: 280px;
+  }
+
+  .text {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .typing-input {
+    height: 36px;
+  }
+  
+  .button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .button i {
+    font-size: 16px;
   }
 }
