@@ -167,67 +167,47 @@ body {
   border: none; /* Remove any border */
 }
 
-/* Common button base styling */
+/* Common button base styling - making all buttons uniform */
 .button {
+  width: 40px;
+  height: 40px;
   border: none;
+  border-radius: 50%;
   cursor: pointer;
   outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
-  height: 40px;
 }
 
-/* Send button (circular) styling */
+/* Send button styling */
 #button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background-color: white;
-  color:#1E628C;
+  color: #1E628C;
   font-size: 41px;
 }
 
 #button:hover {
-  background-color: #ffffff;
+  background-color: #f0f0f0;
 }
 
-/* Save button (wider with text) styling */
+/* Save button styling - now circular like other buttons */
 #save-button {
-  width: auto;
-  padding: 0 15px;
-  border-radius: 20px;
   background-color: #1E628C;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-#save-button i {
   font-size: 16px;
 }
 
 #save-button:hover {
   background-color: #175275;
-  transform: translateY(-2px);
 }
 
-#save-button:active {
-  transform: translateY(1px);
-}
-
-/* Delete chat button (circular) styling */
+/* Delete chat button styling */
 #delete-chat-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background-color: #dc3545;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 #delete-chat-button:hover {
@@ -379,15 +359,9 @@ body {
     padding: 8px;
   }
 
-  #button, #delete-chat-button {
+  #button, #delete-chat-button, #save-button {
     width: 36px;
     height: 36px;
-  }
-
-  #save-button {
-    height: 36px;
-    padding: 0 12px;
-    font-size: 13px;
   }
 
   .typing-input {
