@@ -22,17 +22,18 @@
       <input type="text" class="typing-input" id="input" placeholder="Type your message here..." autocomplete="off" />
       <div id="autocomplete-list" class="autocomplete-items"></div>
       
-      <div class="button-group">
-        <button type="button" class="button" id="save-button">
-          <i class="fa-solid fa-save"></i>
-        </button>
-        <button type="submit" class="button" id="button">
-          <i class="fa-brands fa-telegram"></i>
-        </button>
-        <button type="button" class="button" id="delete-chat-button">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </div>
+     <!-- Button group with changed order: send button first, save button second -->
+<div class="button-group">
+  <button type="submit" class="button" id="button">
+    <i class="fa-brands fa-telegram"></i>
+  </button>
+  <button type="button" class="button" id="save-button">
+    <i class="fa-solid fa-save"></i>
+  </button>
+  <button type="button" class="button" id="delete-chat-button">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</div>
     </form>
   </div>
   
