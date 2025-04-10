@@ -390,10 +390,9 @@ body {
   border-radius: 50%; /* Circular buttons */
 }
 
-/* Specific button styles with consistent sizing */
 #button {
-  background-color: #1E628C; /* Match save button color */
-  color: white;
+  background-color: #1E628C; 
+ 
 }
 
 #button i {
