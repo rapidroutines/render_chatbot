@@ -33,7 +33,6 @@ async function generateAPIResponse(incomingMessageDiv) {
 
     window.typingEffects.showEnhancedTypingEffect(apiResponse, textElement, incomingMessageDiv);
   } catch (error) {
-    console.error("API response error:", error);
     window.chatApp.isResponseGenerating = false;
     
     if (textElement) {
@@ -62,7 +61,6 @@ function showPlaceholderMessage() {
     window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     generateAPIResponse(incomingMessageDiv);
   } else {
-    console.error("Chat container not found");
   }
 }
 
@@ -90,7 +88,6 @@ function handleOutgoingChat() {
 
     showPlaceholderMessage();
   } else {
-    console.error("Chat container not found");
   }
 }
 
@@ -112,7 +109,6 @@ function displayWelcomeMessage() {
     window.typingEffects.showSlowerTypingEffect(welcomeMessage, textElement, welcomeMessageDiv);
     window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
   } else {
-    console.error("Chat container not found");
   }
 }
 
@@ -124,7 +120,6 @@ function loadDataFromLocalstorage() {
     try {
       window.chatApp.context = JSON.parse(savedContext);
     } catch (e) {
-      console.error("Error parsing saved context:", e);
       window.chatApp.context = [];
     }
   }
@@ -138,7 +133,6 @@ function loadDataFromLocalstorage() {
       displayWelcomeMessage();
     }
   } else {
-    console.error("Chat container not found");
   }
 }
 
@@ -152,18 +146,14 @@ function initializeApp() {
         loadDataFromLocalstorage();
       }
     });
-  } else {
-    console.warn("Delete chat button not found");
-  }
+  } 
 
   if (window.chatApp.typingForm) {
     window.chatApp.typingForm.addEventListener("submit", (e) => {
       e.preventDefault();
       handleOutgoingChat();
     });
-  } else {
-    console.error("Typing form not found");
-  }
+  } 
 
   loadDataFromLocalstorage();
 }
