@@ -139,6 +139,4 @@ if (saveButton) {
     e.preventDefault();
     saveChatHistory();
   });
-} else {
-  console.warn("Save button not found");
 }
