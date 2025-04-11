@@ -10,7 +10,6 @@ window.chatApp.inactivityTracker = {
   lastActivityTime: Date.now(),
   
   initialize: function() {
-    console.log("Initializing inactivity tracker...");
     
     const resetActivity = this.resetInactivityTimer.bind(this);
     document.addEventListener('mousemove', resetActivity);
@@ -29,7 +28,6 @@ window.chatApp.inactivityTracker = {
   
   startInactivityTimer: function() {
     this.resetInactivityTimer();
-    console.log("Inactivity timer started");
   },
   
   resetInactivityTimer: function() {
@@ -48,7 +46,6 @@ window.chatApp.inactivityTracker = {
     const inactiveTime = Date.now() - this.lastActivityTime;
     
     if (inactiveTime >= this.inactivityTimeout) {
-      console.log("User inactive, redirecting to Chatbot Front Page...");
       this.showRedirectNotice();
     }
   },
