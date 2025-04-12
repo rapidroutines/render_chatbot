@@ -10,7 +10,6 @@
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
-    // Check if being loaded in an iframe
     window.isInIframe = function() {
       try {
         return window.self !== window.top;
@@ -19,13 +18,11 @@
       }
     };
 
-    // Set a global flag
     window.isEmbedded = window.isInIframe();
   </script>
 </head>
 <body>
   <div class="container">
-    <!-- Title intentionally removed from the visible UI -->
     <div class="chat-list" id="chat"></div>
     <form class="typing-form">
       <input type="text" class="typing-input" id="input" placeholder="Type your message here..." />
