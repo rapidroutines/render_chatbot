@@ -8,10 +8,8 @@ window.chatApp.isResponseGenerating = false;
 window.chatApp.userMessage = null;
 window.chatApp.context = []; 
 
-// Function to notify parent window about chat messages
 function notifyParentWindow(role, content) {
   try {
-    // Check if we're in an iframe
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({
         type: "chatMessage",
@@ -24,10 +22,8 @@ function notifyParentWindow(role, content) {
   }
 }
 
-// Function to notify parent when chat is ended
 function notifyChatEnd() {
   try {
-    // Check if we're in an iframe
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({
         type: "chatEnded"
@@ -38,7 +34,6 @@ function notifyChatEnd() {
   }
 }
 
-// Listen for beforeunload event to notify parent when closing chat
 window.addEventListener('beforeunload', function() {
   notifyChatEnd();
 });
@@ -66,7 +61,6 @@ async function generateAPIResponse(incomingMessageDiv) {
     window.chatApp.context.push({ role: "user", content: window.chatApp.userMessage });
     window.chatApp.context.push({ role: "assistant", content: apiResponse });
     
-    // Notify parent window about assistant response
     notifyParentWindow("assistant", apiResponse);
 
     window.typingEffects.showEnhancedTypingEffect(apiResponse, textElement, incomingMessageDiv);
@@ -119,7 +113,6 @@ function handleOutgoingChat() {
   const outgoingMessageDiv = window.messageUtils.createMessageElement(html, "outgoing");
   outgoingMessageDiv.querySelector(".text").innerText = window.chatApp.userMessage;
   
-  // Notify parent window about user message
   notifyParentWindow("user", window.chatApp.userMessage);
   
   if (window.chatApp.chatContainer) {
@@ -152,7 +145,6 @@ function displayWelcomeMessage() {
     window.typingEffects.showSlowerTypingEffect(welcomeMessage, textElement, welcomeMessageDiv);
     window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     
-    // Notify parent window about assistant welcome message
     notifyParentWindow("assistant", welcomeMessage);
   } else {
     console.error("Chat container not found");
@@ -179,7 +171,6 @@ function loadDataFromLocalstorage() {
     if (!savedChats) {
       displayWelcomeMessage();
     } else {
-      // Send existing messages to parent window for history tracking
       try {
         const messages = document.querySelectorAll('.message');
         messages.forEach(message => {
@@ -209,7 +200,6 @@ function initializeApp() {
         localStorage.removeItem("chat-context");
         window.chatApp.context = [];
         
-        // Notify parent that chat has ended (for saving purposes)
         notifyChatEnd();
         
         loadDataFromLocalstorage();
