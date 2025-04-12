@@ -187,16 +187,6 @@ body {
   background-color: rgba(240, 240, 240, 0.5);
 }
 
-#save-button {
-  background-color: #1E628C;
-  color: white;
-  font-size: 16px;
-}
-
-#save-button:hover {
-  background-color: #175275;
-}
-
 #delete-chat-button {
   background-color: #dc3545;
   color: white;
@@ -345,7 +335,7 @@ body {
     padding: 8px;
   }
 
-  #button, #delete-chat-button, #save-button {
+  #button, #delete-chat-button {
     width: 36px;
     height: 36px;
   }
