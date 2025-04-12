@@ -7,6 +7,7 @@ window.chatApp.deleteChatButton = document.querySelector("#delete-chat-button");
 window.chatApp.isResponseGenerating = false;
 window.chatApp.userMessage = null;
 window.chatApp.context = []; 
+window.chatApp.loadedMessages = new Set(); // Track loaded messages to prevent duplicates
 
 function notifyParentWindow(role, content) {
   try {
@@ -39,6 +40,18 @@ function loadMessage(role, content) {
   try {
     if (!content) return;
     
+    // Create a unique message ID to prevent duplicates
+    const messageId = `${role}-${content.substring(0, 20)}`;
+    
+    // Skip if already loaded
+    if (window.chatApp.loadedMessages.has(messageId)) {
+      console.log("Skipping duplicate message:", messageId);
+      return;
+    }
+    
+    // Mark as loaded
+    window.chatApp.loadedMessages.add(messageId);
+    
     if (role === "user") {
       // Create outgoing message element
       const html = `
@@ -70,10 +83,9 @@ function loadMessage(role, content) {
       if (window.chatApp.chatContainer) {
         window.chatApp.chatContainer.appendChild(incomingMessageDiv);
         const textElement = incomingMessageDiv.querySelector(".text");
-        textElement.innerText = content;
         
-        // Optionally display with typing effect
-        // window.typingEffects.showEnhancedTypingEffect(content, textElement, incomingMessageDiv);
+        // Add text immediately to improve loading speed
+        textElement.innerText = content;
       }
       
       // Add to context
@@ -82,7 +94,14 @@ function loadMessage(role, content) {
     
     // Hide header and scroll to bottom
     document.body.classList.add("hide-header");
-    window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
+    if (window.chatApp.chatContainer) {
+      window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem("saved-chats", window.chatApp.chatContainer.innerHTML);
+    localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context));
+    
   } catch (e) {
     console.error("Error loading message:", e);
   }
@@ -95,7 +114,9 @@ window.addEventListener('beforeunload', function() {
 // Listen for messages from parent window
 window.addEventListener('message', function(event) {
   try {
-    if (event.data && event.data.type === "loadMessage") {
+    // Accept messages from any origin
+    if (event.data && event.data.type === "loadMessage" && event.data.role && event.data.content) {
+      console.log("Received load message request:", event.data);
       loadMessage(event.data.role, event.data.content);
     }
   } catch (e) {
@@ -264,8 +285,13 @@ function initializeApp() {
         localStorage.removeItem("saved-chats");
         localStorage.removeItem("chat-context");
         window.chatApp.context = [];
+        window.chatApp.loadedMessages.clear();
         
         notifyChatEnd();
+        
+        if (window.chatApp.chatContainer) {
+          window.chatApp.chatContainer.innerHTML = '';
+        }
         
         loadDataFromLocalstorage();
       }
@@ -280,6 +306,19 @@ function initializeApp() {
   } 
 
   loadDataFromLocalstorage();
+  
+  // Signal to parent that the iframe is ready
+  if (window.parent && window.parent !== window) {
+    setTimeout(() => {
+      try {
+        window.parent.postMessage({
+          type: "iframeReady"
+        }, "*");
+      } catch (e) {
+        console.error("Error sending ready signal to parent:", e);
+      }
+    }, 500);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initializeApp);
