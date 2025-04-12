@@ -34,8 +34,73 @@ function notifyChatEnd() {
   }
 }
 
+// New function to handle message loading from parent
+function loadMessage(role, content) {
+  try {
+    if (!content) return;
+    
+    if (role === "user") {
+      // Create outgoing message element
+      const html = `
+        <div class="message-content">
+          <p class="text"></p>
+        </div>
+      `;
+      
+      const outgoingMessageDiv = window.messageUtils.createMessageElement(html, "outgoing");
+      outgoingMessageDiv.querySelector(".text").innerText = content;
+      
+      if (window.chatApp.chatContainer) {
+        window.chatApp.chatContainer.appendChild(outgoingMessageDiv);
+      }
+      
+      // Add to context
+      window.chatApp.context.push({ role: "user", content: content });
+    } else if (role === "assistant") {
+      // Create incoming message element
+      const html = `
+        <div class="message-content">
+          <img class="avatar" src="logo.jpg" alt="">
+          <p class="text"></p>
+        </div>
+      `;
+      
+      const incomingMessageDiv = window.messageUtils.createMessageElement(html, "incoming");
+      
+      if (window.chatApp.chatContainer) {
+        window.chatApp.chatContainer.appendChild(incomingMessageDiv);
+        const textElement = incomingMessageDiv.querySelector(".text");
+        textElement.innerText = content;
+        
+        // Optionally display with typing effect
+        // window.typingEffects.showEnhancedTypingEffect(content, textElement, incomingMessageDiv);
+      }
+      
+      // Add to context
+      window.chatApp.context.push({ role: "assistant", content: content });
+    }
+    
+    // Hide header and scroll to bottom
+    document.body.classList.add("hide-header");
+    window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
+  } catch (e) {
+    console.error("Error loading message:", e);
+  }
+}
+
 window.addEventListener('beforeunload', function() {
   notifyChatEnd();
+});
+
+// Listen for messages from parent window
+window.addEventListener('message', function(event) {
+  try {
+    if (event.data && event.data.type === "loadMessage") {
+      loadMessage(event.data.role, event.data.content);
+    }
+  } catch (e) {
+    console.error("Error handling message from parent:", e);
+  }
 });
 
 async function generateAPIResponse(incomingMessageDiv) {
