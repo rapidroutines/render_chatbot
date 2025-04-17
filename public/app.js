@@ -7,7 +7,7 @@ window.chatApp.deleteChatButton = document.querySelector("#delete-chat-button");
 window.chatApp.isResponseGenerating = false;
 window.chatApp.userMessage = null;
 window.chatApp.context = []; 
-window.chatApp.loadedMessages = new Set(); // Track loaded messages to prevent duplicates
+window.chatApp.loadedMessages = new Set(); 
 
 function notifyParentWindow(role, content) {
   try {
@@ -35,25 +35,20 @@ function notifyChatEnd() {
   }
 }
 
-// New function to handle message loading from parent
 function loadMessage(role, content) {
   try {
     if (!content) return;
     
-    // Create a unique message ID to prevent duplicates
     const messageId = `${role}-${content.substring(0, 20)}`;
     
-    // Skip if already loaded
     if (window.chatApp.loadedMessages.has(messageId)) {
       console.log("Skipping duplicate message:", messageId);
       return;
     }
     
-    // Mark as loaded
     window.chatApp.loadedMessages.add(messageId);
     
     if (role === "user") {
-      // Create outgoing message element
       const html = `
         <div class="message-content">
           <p class="text"></p>
@@ -67,10 +62,8 @@ function loadMessage(role, content) {
         window.chatApp.chatContainer.appendChild(outgoingMessageDiv);
       }
       
-      // Add to context
       window.chatApp.context.push({ role: "user", content: content });
     } else if (role === "assistant") {
-      // Create incoming message element
       const html = `
         <div class="message-content">
           <img class="avatar" src="logo.jpg" alt="">
@@ -84,21 +77,17 @@ function loadMessage(role, content) {
         window.chatApp.chatContainer.appendChild(incomingMessageDiv);
         const textElement = incomingMessageDiv.querySelector(".text");
         
-        // Add text immediately to improve loading speed
         textElement.innerText = content;
       }
       
-      // Add to context
       window.chatApp.context.push({ role: "assistant", content: content });
     }
     
-    // Hide header and scroll to bottom
     document.body.classList.add("hide-header");
     if (window.chatApp.chatContainer) {
       window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     }
     
-    // Save to localStorage
     localStorage.setItem("saved-chats", window.chatApp.chatContainer.innerHTML);
     localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context));
     
@@ -111,10 +100,8 @@ window.addEventListener('beforeunload', function() {
   notifyChatEnd();
 });
 
-// Listen for messages from parent window
 window.addEventListener('message', function(event) {
   try {
-    // Accept messages from any origin
     if (event.data && event.data.type === "loadMessage" && event.data.role && event.data.content) {
       console.log("Received load message request:", event.data);
       loadMessage(event.data.role, event.data.content);
@@ -307,7 +294,6 @@ function initializeApp() {
 
   loadDataFromLocalstorage();
   
-  // Signal to parent that the iframe is ready
   if (window.parent && window.parent !== window) {
     setTimeout(() => {
       try {
