@@ -6,6 +6,8 @@ function createMessageElement(content, ...classes) {
   }
   
   function parseFormattingElements(text) {
+    if (!text) return [];
+    
     const segments = [];
     let currentIndex = 0;
   
@@ -72,11 +74,10 @@ function createMessageElement(content, ...classes) {
       "Hi there! Got any fitness questions?",
       "Welcome to RapidRoutines AI! What can I do for you today?",
       "Yo! RapidRoutines AI. Need a hand with something?",
-      "Hey! What’s on your mind?",
+      "Hey! What's on your mind?",
       "Hi! Looking for some fitness advice?",
-      "What’s up? I’m here if you need anything.",
-      "Hi! Let me know how I can help.",
-
+      "What's up? I'm here if you need anything.",
+      "Hi! Let me know how I can help."
     ];
     
     return welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
