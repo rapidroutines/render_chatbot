@@ -39,7 +39,7 @@ function loadMessage(role, content) {
   try {
     if (!content) return;
     
-    const messageId = `${role}-${content.substring(0, 20)}`;
+    const messageId = `${role}-${content}`;
     
     if (window.chatApp.loadedMessages.has(messageId)) {
       console.log("Skipping duplicate message:", messageId);
@@ -88,9 +88,7 @@ function loadMessage(role, content) {
       window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     }
     
-    localStorage.setItem("saved-chats", window.chatApp.chatContainer.innerHTML);
-    localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context));
-    
+    // Don't save to localStorage
   } catch (e) {
     console.error("Error loading message:", e);
   }
@@ -219,47 +217,24 @@ function displayWelcomeMessage() {
     window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     
     notifyParentWindow("assistant", welcomeMessage);
+    
+    // Store welcome message in context properly
+    window.chatApp.context.push({ role: "assistant", content: welcomeMessage });
   } else {
     console.error("Chat container not found");
   }
 }
 
 function loadDataFromLocalstorage() {
-  const savedChats = localStorage.getItem("saved-chats");
-  const savedContext = localStorage.getItem("chat-context");
-
-  if (savedContext) {
-    try {
-      window.chatApp.context = JSON.parse(savedContext);
-    } catch (e) {
-      window.chatApp.context = [];
-    }
-  }
-
+  // Clear container always - don't load from localStorage
   if (window.chatApp.chatContainer) {
-    window.chatApp.chatContainer.innerHTML = savedChats || '';
-    document.body.classList.toggle("hide-header", savedChats);
-    window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight); 
-
-    if (!savedChats) {
-      displayWelcomeMessage();
-    } else {
-      try {
-        const messages = document.querySelectorAll('.message');
-        messages.forEach(message => {
-          const isOutgoing = message.classList.contains('outgoing');
-          const textElement = message.querySelector('.text');
-          if (textElement && textElement.innerText) {
-            notifyParentWindow(
-              isOutgoing ? "user" : "assistant", 
-              textElement.innerText
-            );
-          }
-        });
-      } catch (e) {
-        console.error("Error sending existing messages to parent:", e);
-      }
-    }
+    window.chatApp.chatContainer.innerHTML = '';
+    document.body.classList.toggle("hide-header", false);
+    window.chatApp.context = [];
+    window.chatApp.loadedMessages.clear();
+    
+    // Always display a fresh welcome message
+    displayWelcomeMessage();
   } else {
     console.error("Chat container not found");
   }
@@ -269,8 +244,6 @@ function initializeApp() {
   if (window.chatApp.deleteChatButton) {
     window.chatApp.deleteChatButton.addEventListener("click", () => {
       if (confirm("Are you sure you want to delete all the chats?")) {
-        localStorage.removeItem("saved-chats");
-        localStorage.removeItem("chat-context");
         window.chatApp.context = [];
         window.chatApp.loadedMessages.clear();
         
