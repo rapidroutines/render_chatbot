@@ -1,4 +1,9 @@
 function showEnhancedTypingEffect(text, textElement, incomingMessageDiv, speed = 5) {
+  if (!text) {
+    text = "";
+    console.error("Received undefined or null text in typing effect");
+  }
+  
   const segments = window.messageUtils.parseFormattingElements(text);
 
   const characters = [];
@@ -35,8 +40,7 @@ function showEnhancedTypingEffect(text, textElement, incomingMessageDiv, speed =
         const icon = incomingMessageDiv.querySelector(".icon");
         if (icon) icon.classList.remove("hide");
 
-        localStorage.setItem("saved-chats", window.chatApp.chatContainer.innerHTML);
-        localStorage.setItem("chat-context", JSON.stringify(window.chatApp.context));
+    
         break;
       }
 
