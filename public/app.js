@@ -88,7 +88,6 @@ function loadMessage(role, content) {
       window.chatApp.chatContainer.scrollTo(0, window.chatApp.chatContainer.scrollHeight);
     }
     
-    // Don't save to localStorage
   } catch (e) {
     console.error("Error loading message:", e);
   }
@@ -226,14 +225,13 @@ function displayWelcomeMessage() {
 }
 
 function loadDataFromLocalstorage() {
-  // Clear container always - don't load from localStorage
+
   if (window.chatApp.chatContainer) {
     window.chatApp.chatContainer.innerHTML = '';
     document.body.classList.toggle("hide-header", false);
     window.chatApp.context = [];
     window.chatApp.loadedMessages.clear();
     
-    // Always display a fresh welcome message
     displayWelcomeMessage();
   } else {
     console.error("Chat container not found");
